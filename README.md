@@ -1,118 +1,110 @@
-Fubon Futures Monitor
+# Fubon Futures Monitor
 
-A real-time monitoring script for Taiwan futures (1-minute K-lines) using the Fubon SDK and Telegram notifications.
-It detects breakout/breakdown based on 5MA and alerts volume spikes, surges, and volatility patterns — perfect for short-term day trading analysis or strategy prototyping.
+A real-time futures monitoring script for the Taiwan market using the Fubon SDK and Telegram notifications.  
+Designed for traders and analysts to detect key breakout, surge, and volume spike conditions based on 1-minute candles.
 
-📌 Features
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-✅ Real-time 1-minute candle data via Fubon SDK WebSocket
+---
 
-✅ Detects 5MA breakout / breakdown and trend continuation
+## 📌 Features
 
-✅ Alerts high volatility bars and sudden price surges/drops
+- ✅ Connects to Fubon SDK real-time futures data  
+- ✅ Subscribes to 1-minute candles with after-hours support  
+- ✅ Detects breakouts/breakdowns based on 5MA logic  
+- ✅ Monitors high-low range volatility and price momentum  
+- ✅ Sends structured alerts via Telegram with retry logic  
+- ✅ Auto reconnect on disconnection events
 
-✅ Detects volume spike patterns using recent average and last bar
+---
 
-✅ Sends all signals via Telegram, with retry on failure
+## 📈 Monitoring Logic
 
-✅ Auto reconnects on disconnection
+- 📊 Breakout if price crosses above 5MA for the first time  
+- 📉 Breakdown if price crosses below 5MA for the first time  
+- ⬆️ Continued uptrend if close ≥ 5MA + 9  
+- ⬇️ Continued downtrend if close ≤ 5MA - 9  
+- ⚡ Price surge/drop if 1-min gap ≥ ±14 points  
+- 📶 Volume spike if >1.5x last min or >1.6x 5-min avg  
+- 🕒 Periodic update every 333s: close vs MA and MA delta
 
+---
 
-📈 Strategy Logic
+## 🛠️ Installation
 
-Breakout/Breakdown: Close price crosses above or below 5MA
+You can either clone the repo using Git (if available):
 
-Trend Continuation: Close exceeds 5MA by 9+ pts (above or below)
-
-Volatility Alert: If candle range ≥ 26 pts
-
-Surge/Drop: If 1-minute close-to-close gap ≥ ±14 pts
-
-Volume Spike: If current volume > 1.5× previous OR > 1.6× 5min avg
-
-Interval Summary: Every ~5 mins, reports 5MA delta and close diff
-
-
-🛠️ Installation
-
-Clone the repo using git:
-git clone https://github.com/yourname/FubonNeo-Futures-monitor.git
+```bash
+git clone https://github.com/David-8899/FubonNeo-Futures-monitor.git
 cd FubonNeo-Futures-monitor
+```
 
-Or download the project as a .zip file from GitHub and unzip it.
+Or download the project as a `.zip` file directly from the GitHub page.
 
-Create your .env file:
+Then:
 
-cp .env.example .env
+1. Copy `.env.example` and rename it to `.env`  
+2. Fill in your Fubon credentials and Telegram bot token  
+3. Install dependencies:
 
-Install required packages:
+```bash
 pip install -r requirements.txt
+```
 
-Run the monitor:
+4. Run the script:
+
+```bash
 python futures-monitor.py
+```
 
+---
 
-📦 Fubon SDK Setup
-This script requires the Fubon SDK (fubon_neo.sdk), which is not available on PyPI.
+## 📦 Fubon SDK Setup
 
-To use this:
+This project requires the **Fubon SDK (`fubon_neo.sdk`)**, which is **not available on PyPI**.
 
-Contact your Fubon broker to obtain access to the SDK.
+To run this script:
 
-Place the SDK files in your environment so that import fubon_neo.sdk works.
+1. You must have an active trading account with Fubon Securities.  
+2. Request access to their Python SDK via your broker or Fubon customer support.  
+3. After receiving the SDK package (usually a `.zip` or folder), place it in your working environment and ensure it is importable (e.g., placed alongside `exit_monitor.py` or added to `PYTHONPATH`).
 
-This repository does not include or distribute the SDK.
+> ❗ This repository **does not include or distribute** the SDK itself due to licensing restrictions.
 
+---
 
-⚙️ Environment Variables
+## ⚙️ Environment Variables
 
-Create a .env file like this:
+See `.env.example` for required fields:
 
-ACCOUNT=your_fubon_account
-
+```env
+ACCOUNT=your_account
 PASSWORD=your_password
-
-CERT_PATH=path/to/cert.pfx
-
+CERT_PATH=path/to/your_certificate.pfx
 CERT_PASSWORD=your_cert_password
 
-TELEGRAM_TOKEN=your_bot_token
-
+TELEGRAM_TOKEN_1=your_bot_token
 TELEGRAM_CHAT_ID=your_chat_id
+```
 
-SYMBOL=TXFA1 # or your desired symbol
+---
 
+## 📎 Requirements
 
-🧱 File Structure
+- Python 3.8+
+- `requests`, `python-dotenv`
+- Fubon SDK (external, see section above)
 
-futures-monitor.py – Main script
-.env.example – Environment variable template
-requirements.txt – pip package list
-README.md – Project description
-LICENSE – MIT license
-.gitignore – Excluded sensitive files (e.g., .env)
+---
 
+## ⚠️ Disclaimer
 
-🧠 How It Works
+This script is for educational and monitoring purposes only.
+Use at your own risk. Test thoroughly in non-production environments before applying to real trades.
 
-Connects to Fubon SDK WebSocket using your provided symbol
+---
 
-Receives 1-minute candle data, updates moving buffer
-
-Calculates 5MA and compares close price to generate signals
-
-Detects surges, breakdowns, volatility, and volume spikes
-
-Sends formatted alerts to Telegram via Bot API (with retry)
-
-
-⚠️ Disclaimer
-
-This tool is for educational use only.
-Use it at your own risk.
-This is not a financial recommendation system.
-
-
-📄 License
+## 📄 License
 
 MIT © 2025 David Lee
