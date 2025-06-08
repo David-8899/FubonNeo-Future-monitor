@@ -1,4 +1,4 @@
-Fubon Future Monitor
+Fubon Futures Monitor
 
 A real-time monitoring script for Taiwan futures (1-minute K-lines) using the Fubon SDK and Telegram notifications.
 It detects breakout/breakdown based on 5MA and alerts volume spikes, surges, and volatility patterns — perfect for short-term day trading analysis or strategy prototyping.
@@ -36,8 +36,8 @@ Interval Summary: Every ~5 mins, reports 5MA delta and close diff
 🛠️ Installation
 
 Clone the repo using git:
-git clone https://github.com/yourname/fubon-future-monitor.git
-cd fubon-future-monitor
+git clone https://github.com/yourname/FubonNeo-Futures-monitor.git
+cd FubonNeo-Futures-monitor
 
 Or download the project as a .zip file from GitHub and unzip it.
 
@@ -48,7 +48,7 @@ Install required packages:
 pip install -r requirements.txt
 
 Run the monitor:
-python future-monitor.py
+python futures-monitor.py
 
 
 📦 Fubon SDK Setup
@@ -78,7 +78,7 @@ SYMBOL=TXFA1 # or your desired symbol
 
 🧱 File Structure
 
-future-monitor.py – Main script
+futures-monitor.py – Main script
 .env.example – Environment variable template
 requirements.txt – pip package list
 README.md – Project description
