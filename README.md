@@ -42,6 +42,7 @@ cd FubonNeo-Futures-monitor
 Or download the project as a .zip file from GitHub and unzip it.
 
 Create your .env file:
+
 cp .env.example .env
 
 Install required packages:
@@ -68,11 +69,17 @@ This repository does not include or distribute the SDK.
 Create a .env file like this:
 
 ACCOUNT=your_fubon_account
+
 PASSWORD=your_password
+
 CERT_PATH=path/to/cert.pfx
+
 CERT_PASSWORD=your_cert_password
+
 TELEGRAM_TOKEN=your_bot_token
+
 TELEGRAM_CHAT_ID=your_chat_id
+
 SYMBOL=TXFA1 # or your desired symbol
 
 
