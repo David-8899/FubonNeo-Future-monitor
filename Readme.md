@@ -1,83 +1,91 @@
-📈 TW Futures Price Monitor
-A real-time futures price monitoring script for the Taiwan market using the Fubon Securities SDK.
-This script analyzes 1-minute candle data and sends trading alerts to Telegram based on price movements, volatility, and volume anomalies.
+# Fubon Future Monitor
 
-🔧 Features
-Telegram Alerts
-Automatically sends real-time alerts when:
+A real-time monitoring script for Taiwan futures (1-minute K-lines) using the Fubon SDK and Telegram notifications.
 
-Price crosses above or below 5MA
+It detects breakout/breakdown based on 5MA and alerts volume spikes, surges, and volatility patterns — perfect for short-term day trading analysis or strategy prototyping.
 
-Trend continues with price > MA ±9 points
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-High-low range exceeds 26 points (volatility spike)
+---
 
-Close-to-close price change ≥ ±14 points (momentum alert)
+📌 Features
 
-Volume spikes compared to previous minute or 5-min average
+- ✅ Real-time 1-minute candle data via Fubon SDK WebSocket
+- ✅ Detects 5MA breakout / breakdown and trend continuation
+- ✅ Alerts high volatility bars and sudden price surges/drops
+- ✅ Detects volume spike patterns using recent average and last bar
+- ✅ Sends all signals via Telegram, with retry on failure
+- ✅ Auto reconnects on disconnection
 
-Periodic report every 333 seconds showing price–MA divergence
+---
 
-Auto Reconnect Handling
-Handles SDK or WebSocket disconnections and attempts automatic recovery.
+📈 Strategy Logic
 
-Clean Console Output
-Prints structured 1-minute candle data and volume insights.
+- **Breakout/Breakdown**: Close price crosses above or below 5MA
+- **Trend Continuation**: Close exceeds 5MA by 9+ pts (above or below)
+- **Volatility Alert**: If candle range ≥ 26 pts
+- **Surge/Drop**: If 1-minute close-to-close gap ≥ ±14 pts
+- **Volume Spike**: If current volume > 1.5× previous OR > 1.6× 5min avg
+- **Interval Summary**: Every ~5 mins, reports 5MA delta and close diff
 
-📦 Requirements
-Python 3.8 or higher
+---
 
-Fubon Neo SDK (custom SDK, not public)
+🛠️ Installation
+Clone the repo or download as .zip
 
-Telegram Bot token & Chat ID
+git clone https://github.com/yourname/fubon-future-monitor.git
+cd fubon-future-monitor
 
-.env file containing credentials and settings
+Create your .env file
 
-🚀 Getting Started
-Clone this repository
+cp .env.example .env
 
-Install dependencies:
+Install required packages
 
 pip install -r requirements.txt
 
-Create a .env file using the format below
-
-Run the monitor:
+Run the monitor
 
 python future-monitor.py
 
-📁 .env Example
-ACCOUNT=your_account_id
+📦 Fubon SDK Setup
+This script requires the Fubon SDK (fubon_neo.sdk), which is not available on PyPI.
+
+To use this:
+
+Contact your Fubon broker to obtain access to the SDK.
+
+Place the SDK files in your environment so that import fubon_neo.sdk works.
+
+This repository does not include or distribute the SDK.
+
+⚙️ Environment Variables
+Create a .env file like this:
+
+ACCOUNT=your_fubon_account
 PASSWORD=your_password
-CERT_PATH=D:/your_cert_file.pfx
+CERT_PATH=path/to/cert.pfx
 CERT_PASSWORD=your_cert_password
-TELEGRAM_TOKEN=your_telegram_bot_token
+TELEGRAM_TOKEN=your_bot_token
 TELEGRAM_CHAT_ID=your_chat_id
-SYMBOL=MXF
+SYMBOL=TXFA1 # or your desired symbol
 
-🧠 Strategy Logic
-This script tracks real-time market signals using the following logic:
+📎 Requirements
+Python 3.8+
 
-5MA Breakout Detection: Detects first time price crosses above or below 5-minute MA
+Fubon SDK (external)
 
-Trend Continuation: Detects sustained move when price exceeds MA ±9 points
+pip packages:
 
-Volatility Alerts: Alerts when candle’s high-low range ≥ 26 points
+requests
 
-Momentum Shifts: Detects strong 1-minute price moves ≥ 14 points
+python-dotenv
 
-Volume Spikes: Compares current volume to previous and 5-min average
+⚠️ Disclaimer
+This tool is for educational use only.
+Use it at your own risk.
+This is not a trading recommendation system.
 
-333-second Interval Reports: Periodic summary of price–MA gap and MA change
-
-All timestamps in Telegram are formatted using Taiwan local time (UTC+8)
-
-📎 License
-This project is licensed under the MIT License.
-
-🙋 About
-This is a side project built to assist with real-time futures market monitoring.
-Currently supports tracking one symbol at a time.
-Developed by David-8899 using the Fubon Neo SDK and Telegram API.
-
-Feel free to fork, customize, or suggest improvements via GitHub issues.
+📄 License
+MIT © 2025 David Lee
