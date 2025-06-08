@@ -7,7 +7,7 @@ import traceback
 from datetime import timedelta, datetime
 
 # ─── Load .env ───
-env_file = r"D:\Fubon auto venv\555\future_monitor.env"  # Modify as needed
+env_file = r"D:\Fubon auto venv\555\futures_monitor.env"  # Modify as needed
 load_dotenv(dotenv_path=env_file.strip())
 
 ACCOUNT          = os.getenv("ACCOUNT")
